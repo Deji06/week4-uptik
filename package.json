@@ -2,10 +2,11 @@
   "name": "week4-uptik",
   "version": "1.0.0",
   "description": "",
-  "main": "app.ts",
+  "main": "dist/app.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/app.ts",
-    "start": "node src/app.ts"
+    "dev": "nodemon src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -20,10 +21,10 @@
     "helmet": "^8.1.0",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.5",
-    "nodemon": "^3.1.10"
+    "mongoose": "^8.16.5"
   },
   "devDependencies": {
+    "nodemon": "^3.1.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
