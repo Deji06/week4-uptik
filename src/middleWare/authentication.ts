@@ -1,5 +1,5 @@
-import { StatusCodes } from 'http-status-codes'
-import {customApiError } from '../errors/customError'
+// import { StatusCodes } from 'http-status-codes'
+import {CustomApiError } from '../errors'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import  {Request, Response, NextFunction} from 'express'
@@ -18,7 +18,7 @@ interface JwtPayload {
     
     if(!authHeader || !authHeader.startsWith('Bearer ' )) {
         console.log("Missing or invalid Authorization header");
-        throw new customApiError('authentication failed, try again', StatusCodes.UNAUTHORIZED)
+        throw new CustomApiError('authentication failed, try again')
     }
     const token = authHeader.split(' ')[1] 
     console.log("token", token);
@@ -28,7 +28,7 @@ interface JwtPayload {
         req.userDetail = tokenVerification.userId 
         next()
     } catch (error) {
-        throw new customApiError('invalid token', StatusCodes.UNAUTHORIZED)
+        throw new CustomApiError('invalid token')
     }
 } 
 export default auth

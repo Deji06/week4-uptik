@@ -1,9 +1,9 @@
 import  {Request, Response, NextFunction} from 'express'
-import {customApiError} from '../errors/customError'
+import {CustomApiError} from '../errors/index'
 import { StatusCodes } from 'http-status-codes'
 
 const errorHandleMiddleWare = (err:Error, req: Request, res:Response, next:NextFunction) => {
-    if(err instanceof customApiError) {
+    if(err instanceof CustomApiError) {
         // StatusCode: StatusCodes
         return res.status(err.statusCode).json({msg: err.message})
     }

@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes"
 import Note from '../models/tasks';
-import  { customApiError } from "../errors/customError";
+import  { NotFoundError, BadRequestError } from "../errors/index";
 import {Request, Response, NextFunction}  from 'express'
 
 export const getAllTasks = async (req:Request, res:Response) => {
@@ -19,7 +19,7 @@ export const getTask = async (req:Request, res:Response, next:NextFunction) => {
     const {userDetail, params:{id:taskId}} = req
     const getTask = await Note.findOne({_id:taskId, createdBy:userDetail })
     if(!getTask) {
-        throw new customApiError('task not found', StatusCodes.NOT_FOUND)
+        throw new NotFoundError('task not found')
     }
     res.status(StatusCodes.OK).json({getTask})
 }
@@ -34,11 +34,11 @@ export const createNewTask = async (req:Request, res:Response) => {
  export const updateTask = async (req:Request, res:Response) => {
     const{userDetail, params:{id:taskId, body:content}} = req
     if(content === '') {
-        throw new customApiError('field cannot be empty', StatusCodes.NOT_FOUND)
+        throw new BadRequestError('field cannot be empty')
     }
     const updateTask = await Note.findByIdAndUpdate({createdBy: userDetail, _id:taskId}, req.body, {new:true, runValidators: true})
     if(!updateTask) {
-        throw new customApiError('no task with id:taskId found', StatusCodes.NOT_FOUND)
+        throw new NotFoundError('no task with id:taskId found')
     }
     res.status(StatusCodes.OK).json({updateTask})
     // res.send('update task')
@@ -48,15 +48,7 @@ export const deleteTask = async (req:Request, res:Response) => {
     const {userDetail, params:{id:taskId}} = req
     const deleteTask = await Note.findByIdAndDelete({_id:taskId, createdBy:userDetail})
     if(!deleteTask) {
-        throw new customApiError('no task with id:taskId found', StatusCodes.NOT_FOUND)
+        throw new NotFoundError('no task with id:taskId found')
     }
     res.status(StatusCodes.OK).json({msg: 'task successfully deleted'})
 }
-
-// module.exports = {
-//     getAllTasks,
-//     getTask,
-//     createNewTask,
-//     updateTask,
-//     deleteTask
-// }

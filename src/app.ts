@@ -1,12 +1,12 @@
 //  @ts-ignore
-import express, {Express, Request, Response} from 'express'
+import express, {Express} from 'express'
 import dotenv from 'dotenv'
 dotenv.config()
 const app:Express = express()
 import connectDb from './DB/connect'
 import authRouter from '../src/routes/user'
 import taskRouter from '../src/routes/task'
-import notFound from '../src/errors/notFound'
+import NotFoundMiddleware from '../src/middleWare/NotFoundMiddleware'
 import errorHandlerMiddleWare from '../src/middleWare/errorHandler'
 import  userAuthentication from './middleWare/authentication'
 import helmet from 'helmet'
@@ -35,7 +35,7 @@ app.use('/api/v1/task', userAuthentication, taskRouter)
 
 
 // middleWare
-app.use(notFound)
+app.use(NotFoundMiddleware)
 app.use(errorHandlerMiddleWare)
 
  const PORT = process.env.PORT || 3000

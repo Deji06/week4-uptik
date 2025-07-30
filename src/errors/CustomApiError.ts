@@ -5,10 +5,10 @@ declare module 'express-serve-static-core' {
     userDetail?: string; // Matches tokenVerification.userId
   }
 }
-export class customApiError extends Error {
+export class CustomApiError extends Error {
     statusCode:StatusCodes
-    constructor(message:string, statusCode:StatusCodes){
+    constructor(message:string){
         super(message)
-        this.statusCode = statusCode
+        this.statusCode = StatusCodes.INTERNAL_SERVER_ERROR
     }
 }
