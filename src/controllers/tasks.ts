@@ -32,11 +32,21 @@ export const createNewTask = async (req:Request, res:Response) => {
 }
 
  export const updateTask = async (req:Request, res:Response) => {
-    const{userDetail, params:{id:taskId, body:content}} = req
-    if(content === '') {
-        throw new BadRequestError('field cannot be empty')
+    const{userDetail} = req
+     const{id:taskId} = req.params
+     const{content, completed} = req.body
+     if (!content && typeof completed === 'undefined') {
+        throw new BadRequestError('Request body must contain either "content" or "completed"');
     }
-    const updateTask = await Note.findByIdAndUpdate({createdBy: userDetail, _id:taskId}, req.body, {new:true, runValidators: true})
+    if (typeof content === 'string' && content.trim() === '') {
+        throw new BadRequestError('Content field cannot be an empty string');
+    }
+        const updateTask = await Note.findByIdAndUpdate(
+        { _id: taskId, createdBy: userDetail },
+        { content, completed },
+        { new: true, runValidators: true }
+    );
+    // const updateTask = await Note.findByIdAndUpdate({createdBy: userDetail, _id:taskId}, req.body, {new:true, runValidators: true})
     if(!updateTask) {
         throw new NotFoundError('no task with id:taskId found')
     }
