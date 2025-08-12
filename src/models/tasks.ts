@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-// const User = require('../models/user')
 const taskSchema = new mongoose.Schema({
     content: {
         type: String,
@@ -12,7 +11,7 @@ const taskSchema = new mongoose.Schema({
     },
     completed: {
         type: Boolean,
-        default: false
+        default: false,
     }
 
 }, {timestamps: true})

@@ -12,7 +12,6 @@ export const getAllTasks = async (req: Request, res: Response) => {
       .status(StatusCodes.UNAUTHORIZED)
       .json({ msg: "No user found in request" });
   }
-  // console.log("user auth verification:" , req.userDetail);
   const getAll = await Note.find({ createdBy: req.userDetail }).sort(
     "createdAt"
   );
@@ -92,7 +91,6 @@ export const updateTask = async (req: Request, res: Response) => {
     { content, completed },
     { new: true, runValidators: true }
   );
-  // const updateTask = await Note.findByIdAndUpdate({createdBy: userDetail, _id:taskId}, req.body, {new:true, runValidators: true})
   if (!updateTask) {
     throw new NotFoundError("no task with id:taskId found");
   }
