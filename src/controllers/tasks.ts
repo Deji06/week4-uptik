@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Note from "../models/tasks";
+import mongoose from 'mongoose';
 import { NotFoundError, BadRequestError } from "../errors/index";
 import { Request, Response, NextFunction } from "express";
 
@@ -41,6 +42,16 @@ export const createNewTask = async (req: Request, res: Response) => {
       throw new BadRequestError('Task content cannot be empty');
     }
     const createdBy = req.userDetail;
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('MongoDB connection is not established');
+    }
+    console.log('Database:', mongoose.connection.db?.databaseName); 
+    console.log('Collection:', Note.collection.name);
+    if (!mongoose.connection.db) {
+  console.log('Database: Not connected');
+} else {
+  console.log('Database:', mongoose.connection.db.databaseName);
+}
     const task = await Note.create({
       content,
       createdBy,
