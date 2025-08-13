@@ -1,5 +1,6 @@
 //  @ts-ignore
 import express, {Express} from 'express'
+import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 dotenv.config()
 const app:Express = express()
@@ -45,9 +46,11 @@ app.use(errorHandlerMiddleWare)
         await connectDb(config.MONGO_URI)
         app.listen(PORT, ()=> {
             console.log(`app is listening in port: ${PORT}.....`)
+            console.log('MongoDB connected:', mongoose.connection.db?.databaseName);
         })  
     } catch (error) {
         console.log(error); 
+        console.error('MongoDB connection error:', error);
     }
  }
 start()

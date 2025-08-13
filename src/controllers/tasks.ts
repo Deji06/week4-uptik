@@ -5,8 +5,8 @@ import { NotFoundError, BadRequestError } from "../errors/index";
 import { Request, Response, NextFunction } from "express";
 
 export const getAllTasks = async (req: Request, res: Response) => {
-  console.log("user auth verification:", req.userDetail); // Log userDetail
-  console.log("Request Headers in getAllTasks:", req.headers); // Log headers
+  console.log("user auth verification:", req.userDetail); 
+  console.log("Request Headers in getAllTasks:", req.headers); 
 
   if (!req.userDetail) {
     return res
@@ -68,22 +68,6 @@ export const createNewTask = async (req: Request, res: Response) => {
   }
 };
 
-// export const createNewTask = async (req: Request, res: Response) => {
-//   try {
-//     const { content } = req.body;
-//     const createdBy = req.userDetail;
-//     const task = await Note.create({
-//       content,
-//       createdBy,
-//     });
-//     res.status(StatusCodes.CREATED).json({ task });
-//   } catch (error) {
-//     console.error(error);
-//     res
-//       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-//       .json({ msg: "Something went wrong, please try again later." });
-//   }
-// };
 
 export const updateTask = async (req: Request, res: Response) => {
   const { userDetail } = req;
@@ -106,7 +90,6 @@ export const updateTask = async (req: Request, res: Response) => {
     throw new NotFoundError("no task with id:taskId found");
   }
   res.status(StatusCodes.OK).json({ updateTask });
-  // res.send('update task')
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
