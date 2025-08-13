@@ -17,7 +17,7 @@ import mongoose from 'mongoose';
        }
      }, { timestamps: true });
 
-     export default mongoose.model('Note', taskSchema, 'notes');
+     export default mongoose.model('Note', taskSchema, 'tasks');
 
 
 // import mongoose from 'mongoose'
